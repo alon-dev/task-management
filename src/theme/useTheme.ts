@@ -1,25 +1,31 @@
-import { useEffect, useState } from 'react';
+import { create } from 'zustand';
 
 export type Theme = 'dark' | 'light';
 
 const STORAGE_KEY = 'workflow-app.theme';
 
 function readStoredTheme(): Theme {
-  const stored = localStorage.getItem(STORAGE_KEY);
-  return stored === 'light' ? 'light' : 'dark';
+  return localStorage.getItem(STORAGE_KEY) === 'light' ? 'light' : 'dark';
 }
 
-export function useTheme() {
-  const [theme, setTheme] = useState<Theme>(readStoredTheme);
-
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-    localStorage.setItem(STORAGE_KEY, theme);
-  }, [theme]);
-
-  function toggleTheme() {
-    setTheme((current) => (current === 'dark' ? 'light' : 'dark'));
-  }
-
-  return { theme, toggleTheme };
+function applyTheme(theme: Theme) {
+  document.documentElement.classList.toggle('dark', theme === 'dark');
+  localStorage.setItem(STORAGE_KEY, theme);
 }
+
+interface ThemeState {
+  theme: Theme;
+  toggleTheme: () => void;
+}
+
+const initialTheme = readStoredTheme();
+applyTheme(initialTheme);
+
+export const useTheme = create<ThemeState>((set, get) => ({
+  theme: initialTheme,
+  toggleTheme: () => {
+    const next: Theme = get().theme === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+    set({ theme: next });
+  },
+}));

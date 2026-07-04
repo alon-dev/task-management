@@ -34,7 +34,7 @@ The build is divided into stages, each ending in a runnable app, each kept small
 - Stage 1: theming foundation (dark/light) + app shell (done)
 - Stage 2: data layer & persistence (done)
 - Stage 3: task & subtask CRUD (done)
-- Stage 4: markdown task journal
+- Stage 4: markdown task journal (done)
 - Stage 5: daily & weekly planning prompts
 - Stage 6: task aging visualization
 - Stage 7: web polish
