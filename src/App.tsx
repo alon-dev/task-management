@@ -1,61 +1,47 @@
 import { useState } from 'react';
-import { X } from 'lucide-react';
 import { AppShell } from './shell/AppShell';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import type { ViewKey } from './shell/types';
+import { AddTaskDialog } from './tasks/AddTaskDialog';
+import { TaskDetailDialog } from './tasks/TaskDetailDialog';
+import { TaskList } from './tasks/TaskList';
 import { useWorkflowStore } from './data/store';
+
+const VIEW_TITLES: Record<ViewKey, string> = {
+  today: 'המשימות המובילות של היום',
+  week: 'המשימות המובילות של השבוע',
+  all: 'כל המשימות',
+  backlog: 'בקלוג',
+};
 
 function App() {
   const tasks = useWorkflowStore((state) => state.tasks);
-  const addTask = useWorkflowStore((state) => state.addTask);
-  const deleteTask = useWorkflowStore((state) => state.deleteTask);
-  const [newTaskTitle, setNewTaskTitle] = useState('');
+  const [activeView, setActiveView] = useState<ViewKey>('today');
+  const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
 
-  function handleAddTask() {
-    const title = newTaskTitle.trim();
-    if (title === '') return;
-    addTask(title);
-    setNewTaskTitle('');
-  }
+  const isPlanningView = activeView === 'today' || activeView === 'week';
+  const visibleTasks =
+    activeView === 'backlog' ? tasks.filter((task) => task.category === 'backlog') : tasks;
 
   return (
-    <AppShell>
-      <h1 className="text-2xl font-semibold">טופ משימות להיום</h1>
-      <p className="mt-2 text-muted-foreground">
-        ניהול משימות ותכנון יומי מגיעים בשלבים הבאים.
-      </p>
-
-      <div className="mt-6 flex max-w-md gap-2">
-        <Input
-          value={newTaskTitle}
-          onChange={(event) => setNewTaskTitle(event.target.value)}
-          onKeyDown={(event) => event.key === 'Enter' && handleAddTask()}
-          placeholder="הוספת משימה חדשה"
-        />
-        <Button type="button" onClick={handleAddTask}>
-          הוסף
-        </Button>
+    <AppShell activeView={activeView} onSelectView={setActiveView}>
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-semibold">{VIEW_TITLES[activeView]}</h1>
+        {!isPlanningView && <AddTaskDialog />}
       </div>
 
-      <ul className="mt-6 max-w-md space-y-2">
-        {tasks.map((task) => (
-          <li
-            key={task.id}
-            className="flex items-center justify-between rounded-md border px-3 py-2"
-          >
-            <span>{task.title}</span>
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              onClick={() => deleteTask(task.id)}
-              aria-label="מחק משימה"
-            >
-              <X size={16} />
-            </Button>
-          </li>
-        ))}
-      </ul>
+      <div className="mt-6 max-w-lg">
+        {isPlanningView ? (
+          <p className="text-muted-foreground">תכנון יומי ושבועי יתווספו בשלב הבא.</p>
+        ) : (
+          <TaskList
+            tasks={visibleTasks}
+            emptyMessage={activeView === 'backlog' ? 'אין משימות בבקלוג' : 'עדיין אין משימות'}
+            onOpenDetail={setSelectedTaskId}
+          />
+        )}
+      </div>
+
+      <TaskDetailDialog taskId={selectedTaskId} onClose={() => setSelectedTaskId(null)} />
     </AppShell>
   );
 }
