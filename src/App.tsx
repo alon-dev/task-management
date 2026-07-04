@@ -1,9 +1,13 @@
+import { AppShell } from './shell/AppShell';
+
 function App() {
   return (
-    <main>
-      <h1>Workflow App</h1>
-      <p>Stage 0 scaffold complete. Theming and task management are coming next.</p>
-    </main>
+    <AppShell>
+      <h1 className="text-2xl font-semibold">טופ משימות להיום</h1>
+      <p className="mt-2 text-muted-foreground">
+        ניהול משימות ותכנון יומי מגיעים בשלבים הבאים.
+      </p>
+    </AppShell>
   );
 }
 
