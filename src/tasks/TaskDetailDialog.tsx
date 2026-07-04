@@ -21,6 +21,7 @@ import {
 import { useWorkflowStore } from '@/data/store';
 import type { TaskCategory } from '@/data/types';
 import { CATEGORY_LABELS } from './categoryLabels';
+import { JournalEditor } from './JournalEditor';
 
 interface TaskDetailDialogProps {
   taskId: string | null;
@@ -62,7 +63,7 @@ export function TaskDetailDialog({ taskId, onClose }: TaskDetailDialogProps) {
         }
       }}
     >
-      <DialogContent className="max-w-lg">
+      <DialogContent className="max-h-[85vh] max-w-2xl overflow-y-auto">
         <DialogHeader>
           <DialogTitle>פרטי משימה</DialogTitle>
         </DialogHeader>
@@ -154,6 +155,14 @@ export function TaskDetailDialog({ taskId, onClose }: TaskDetailDialogProps) {
                 <Plus size={16} />
               </Button>
             </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label>יומן משימה</Label>
+            <JournalEditor
+              value={task.journal}
+              onChange={(journal) => updateTask(task.id, { journal })}
+            />
           </div>
         </div>
 
