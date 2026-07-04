@@ -32,7 +32,7 @@ The user's background is C, C#, C++, Python, and basic React/JS/HTML/CSS.
 The build is divided into stages, each ending in a runnable app, each kept small enough that a single agent session can complete it without mistakes:
 - Stage 0: project scaffold (done)
 - Stage 1: theming foundation (dark/light) + app shell (done)
-- Stage 2: data layer & persistence
+- Stage 2: data layer & persistence (done)
 - Stage 3: task & subtask CRUD
 - Stage 4: markdown task journal
 - Stage 5: daily & weekly planning prompts
