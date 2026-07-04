@@ -13,6 +13,8 @@ interface WorkflowState {
   addSubtask: (taskId: string, title: string) => void;
   toggleSubtask: (taskId: string, subtaskId: string) => void;
   deleteSubtask: (taskId: string, subtaskId: string) => void;
+  setDailyPlan: (date: string, taskIds: string[], subtaskIds: string[]) => void;
+  setWeeklyPlan: (weekStart: string, taskIds: string[], subtaskIds: string[]) => void;
 }
 
 function nowIso() {
@@ -99,6 +101,23 @@ export const useWorkflowStore = create<WorkflowState>()(
                 }
               : task,
           ),
+        })),
+      setDailyPlan: (date, taskIds, subtaskIds) =>
+        set((state) => ({
+          dailyPlans: [
+            ...state.dailyPlans.filter((plan) => plan.date !== date),
+            { date, taskIds, subtaskIds },
+          ],
+          settings: { ...state.settings, lastActiveDate: date },
+        })),
+
+      setWeeklyPlan: (weekStart, taskIds, subtaskIds) =>
+        set((state) => ({
+          weeklyPlans: [
+            ...state.weeklyPlans.filter((plan) => plan.weekStart !== weekStart),
+            { weekStart, taskIds, subtaskIds },
+          ],
+          settings: { ...state.settings, lastWeekStart: weekStart },
         })),
     }),
     {
