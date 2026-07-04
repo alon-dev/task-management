@@ -1,0 +1,25 @@
+import { useEffect, useState } from 'react';
+
+export type Theme = 'dark' | 'light';
+
+const STORAGE_KEY = 'workflow-app.theme';
+
+function readStoredTheme(): Theme {
+  const stored = localStorage.getItem(STORAGE_KEY);
+  return stored === 'light' ? 'light' : 'dark';
+}
+
+export function useTheme() {
+  const [theme, setTheme] = useState<Theme>(readStoredTheme);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem(STORAGE_KEY, theme);
+  }, [theme]);
+
+  function toggleTheme() {
+    setTheme((current) => (current === 'dark' ? 'light' : 'dark'));
+  }
+
+  return { theme, toggleTheme };
+}
