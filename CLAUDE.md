@@ -36,7 +36,7 @@ The build is divided into stages, each ending in a runnable app, each kept small
 - Stage 3: task & subtask CRUD (done)
 - Stage 4: markdown task journal (done)
 - Stage 5: daily & weekly planning prompts (done)
-- Stage 6: task aging visualization
+- Stage 6: task aging visualization (done)
 - Stage 7: web polish
 - Stage 8: Electron desktop wrap
 
