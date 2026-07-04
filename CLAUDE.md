@@ -10,10 +10,29 @@ this app should be a slick app where a person can manage his tasks and todo list
 5. Tasks that exist for more than 2 weeks and are not categorized as "backlog" should turn more and more red with each time that passes
 
 # Tech stack
-currently none chosen. I have background in C, C#, C++, Python, and basic react/js/html/css, pick three options for tech stacks which i will understand the most and present their pros and cons
+React + TypeScript (Vite), built as a web app first and wrapped in Electron for desktop packaging later.
+- State: Zustand
+- Persistence: localStorage via a storage adapter (swappable for disk storage once wrapped in Electron)
+- Markdown editing/preview: CodeMirror 6 + react-markdown/remark-gfm
+- Dates: date-fns
+- Icons: lucide-react
+- Linting/formatting: oxlint + Prettier
+
+The user's background is C, C#, C++, Python, and basic React/JS/HTML/CSS.
 
 # Planning
-Divide the mission of creating this app to stages, what you plan to achieve at each stage, which features are going to be implemented in each stage, make sure each stage is as simple so that the agent that creates that stage makes no mistake.
+The build is divided into stages, each ending in a runnable app, each kept small enough that a single agent session can complete it without mistakes:
+- Stage 0: project scaffold (done)
+- Stage 1: theming foundation (dark/light) + app shell (done)
+- Stage 2: data layer & persistence
+- Stage 3: task & subtask CRUD
+- Stage 4: markdown task journal
+- Stage 5: daily & weekly planning prompts
+- Stage 6: task aging visualization
+- Stage 7: web polish
+- Stage 8: Electron desktop wrap
 
-# To start
-After planning is done and i approve of the tech stack and plans, initialize a new git repo with a .gitignore relevant to the project
+# Workflow
+- Repo: git initialized locally, remote at github.com:alon-dev/task-management.git
+- Each stage is built on its own branch, pushed, and opened as a pull request on GitHub (via `gh`) for review before merging
+- Verify each stage by actually running the app (dev server + headless browser check), not just by building/linting
