@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { Plus, Trash2, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -21,7 +21,10 @@ import {
 import { useWorkflowStore } from '@/data/store';
 import type { TaskCategory } from '@/data/types';
 import { CATEGORY_LABELS } from './categoryLabels';
-import { JournalEditor } from './JournalEditor';
+
+const JournalEditor = lazy(() =>
+  import('./JournalEditor').then((module) => ({ default: module.JournalEditor })),
+);
 
 interface TaskDetailDialogProps {
   taskId: string | null;
@@ -159,10 +162,12 @@ export function TaskDetailDialog({ taskId, onClose }: TaskDetailDialogProps) {
 
           <div className="space-y-2">
             <Label>יומן משימה</Label>
-            <JournalEditor
-              value={task.journal}
-              onChange={(journal) => updateTask(task.id, { journal })}
-            />
+            <Suspense fallback={<div className="h-[200px] rounded-md border" />}>
+              <JournalEditor
+                value={task.journal}
+                onChange={(journal) => updateTask(task.id, { journal })}
+              />
+            </Suspense>
           </div>
         </div>
 

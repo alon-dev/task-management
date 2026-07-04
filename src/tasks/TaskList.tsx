@@ -1,3 +1,4 @@
+import { Inbox } from 'lucide-react';
 import type { Task } from '@/data/types';
 import { TaskItem } from './TaskItem';
 
@@ -9,7 +10,12 @@ interface TaskListProps {
 
 export function TaskList({ tasks, emptyMessage, onOpenDetail }: TaskListProps) {
   if (tasks.length === 0) {
-    return <p className="text-muted-foreground">{emptyMessage}</p>;
+    return (
+      <div className="flex flex-col items-center gap-2 rounded-md border border-dashed py-10 text-muted-foreground">
+        <Inbox size={28} />
+        <p>{emptyMessage}</p>
+      </div>
+    );
   }
 
   return (
