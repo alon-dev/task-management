@@ -1,6 +1,19 @@
 import type { ReactNode } from 'react';
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarTrigger,
+} from '@/components/ui/sidebar';
 import { ThemeToggle } from '../theme/ThemeToggle';
-import './AppShell.css';
+
+const NAV_ITEMS = ['Today', 'This Week', 'All Tasks', 'Backlog'] as const;
 
 interface AppShellProps {
   children: ReactNode;
@@ -8,20 +21,28 @@ interface AppShellProps {
 
 export function AppShell({ children }: AppShellProps) {
   return (
-    <div className="app-shell">
-      <aside className="app-shell__sidebar">
-        <div className="app-shell__brand">Workflow</div>
-        <nav className="app-shell__nav">
-          <span className="app-shell__nav-item app-shell__nav-item--active">Today</span>
-          <span className="app-shell__nav-item">This Week</span>
-          <span className="app-shell__nav-item">All Tasks</span>
-          <span className="app-shell__nav-item">Backlog</span>
-        </nav>
-        <div className="app-shell__sidebar-footer">
+    <SidebarProvider>
+      <Sidebar>
+        <SidebarHeader className="px-4 py-3 text-lg font-bold">Workflow</SidebarHeader>
+        <SidebarContent>
+          <SidebarMenu className="px-2">
+            {NAV_ITEMS.map((item, index) => (
+              <SidebarMenuItem key={item}>
+                <SidebarMenuButton isActive={index === 0}>{item}</SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </SidebarContent>
+        <SidebarFooter>
           <ThemeToggle />
-        </div>
-      </aside>
-      <main className="app-shell__main">{children}</main>
-    </div>
+        </SidebarFooter>
+      </Sidebar>
+      <SidebarInset>
+        <header className="flex items-center border-b px-6 py-3">
+          <SidebarTrigger />
+        </header>
+        <main className="flex-1 px-10 py-8">{children}</main>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }

@@ -13,7 +13,7 @@ export function useTheme() {
   const [theme, setTheme] = useState<Theme>(readStoredTheme);
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.classList.toggle('dark', theme === 'dark');
     localStorage.setItem(STORAGE_KEY, theme);
   }, [theme]);
 
