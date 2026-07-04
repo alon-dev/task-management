@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/sidebar';
 import { ThemeToggle } from '../theme/ThemeToggle';
 
-const NAV_ITEMS = ['היום', 'השבוע', 'כל המשימות', 'רשימת המתנה'] as const;
+const NAV_ITEMS = ['להיום', 'לשבוע', 'כל המשימות', 'בקלוג'] as const;
 
 interface AppShellProps {
   children: ReactNode;
@@ -22,7 +22,7 @@ interface AppShellProps {
 export function AppShell({ children }: AppShellProps) {
   return (
     <SidebarProvider>
-      <Sidebar>
+      <Sidebar side="right">
         <SidebarHeader className="px-4 py-3 text-lg font-bold">לוח המשימות</SidebarHeader>
         <SidebarContent>
           <SidebarMenu className="px-2">
