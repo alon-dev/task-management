@@ -1,3 +1,4 @@
+import { ListChecks } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useWorkflowStore } from '@/data/store';
@@ -38,7 +39,10 @@ export function PlanTasksView({
       </Button>
 
       {isEmpty ? (
-        <p className="text-muted-foreground">{emptyMessage}</p>
+        <div className="flex flex-col items-center gap-2 rounded-md border border-dashed py-10 text-muted-foreground">
+          <ListChecks size={28} />
+          <p>{emptyMessage}</p>
+        </div>
       ) : (
         <ul className="max-w-lg space-y-2">
           {selectedTasks.map((task) => (
