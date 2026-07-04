@@ -3,6 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useWorkflowStore } from '@/data/store';
 import type { Task } from '@/data/types';
+import { getTaskAgingStyle } from './taskAging';
 
 interface TaskItemProps {
   task: Task;
@@ -13,10 +14,12 @@ export function TaskItem({ task, onOpenDetail }: TaskItemProps) {
   const updateTask = useWorkflowStore((state) => state.updateTask);
   const doneSubtasks = task.subtasks.filter((subtask) => subtask.done).length;
   const isDone = task.status === 'done';
+  const agingStyle = getTaskAgingStyle(task);
 
   return (
     <li
       onClick={() => onOpenDetail(task.id)}
+      style={agingStyle}
       className="flex cursor-pointer items-center justify-between gap-3 rounded-md border px-3 py-2 hover:bg-accent"
     >
       <div className="flex items-center gap-3">
