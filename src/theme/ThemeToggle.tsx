@@ -5,6 +5,7 @@ import { useTheme } from './useTheme';
 export function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
   const isDark = theme === 'dark';
+  const targetLabel = isDark ? 'בהיר' : 'כהה';
 
   return (
     <Button
@@ -12,11 +13,11 @@ export function ThemeToggle() {
       variant="outline"
       className="w-full justify-start gap-2"
       onClick={toggleTheme}
-      aria-label={`Switch to ${isDark ? 'light' : 'dark'} theme`}
-      title={`Switch to ${isDark ? 'light' : 'dark'} theme`}
+      aria-label={`עבור למצב ${targetLabel}`}
+      title={`עבור למצב ${targetLabel}`}
     >
       {isDark ? <Sun size={18} /> : <Moon size={18} />}
-      {isDark ? 'Light mode' : 'Dark mode'}
+      {isDark ? 'מצב בהיר' : 'מצב כהה'}
     </Button>
   );
 }

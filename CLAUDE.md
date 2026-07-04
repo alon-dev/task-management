@@ -17,6 +17,14 @@ React + TypeScript (Vite), built as a web app first and wrapped in Electron for 
 - Dates: date-fns
 - Icons: lucide-react
 - Linting/formatting: oxlint + Prettier
+- UI components: shadcn/ui (base/nova preset) + Tailwind CSS v4
+
+# Language & direction
+The app's UI is in Hebrew, right-to-left (RTL).
+- `index.html` sets `<html lang="he" dir="rtl">` — this drives layout direction for the whole app
+- shadcn/ui's components (notably the sidebar) already ship RTL-aware Tailwind classes (`rtl:`/`ltr:` variants, logical `start`/`end` spacing), so no component rework was needed — only the `dir`/`lang` attributes and the UI copy itself
+- All user-facing strings (nav labels, headings, button text, aria-labels) are written in Hebrew directly in the components
+- Code itself (variable/function/component names, comments, commit messages) stays in English, per the "clean and readable code" rule above — only text rendered to the user is Hebrew
 
 The user's background is C, C#, C++, Python, and basic React/JS/HTML/CSS.
 

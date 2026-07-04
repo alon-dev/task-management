@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/sidebar';
 import { ThemeToggle } from '../theme/ThemeToggle';
 
-const NAV_ITEMS = ['Today', 'This Week', 'All Tasks', 'Backlog'] as const;
+const NAV_ITEMS = ['היום', 'השבוע', 'כל המשימות', 'רשימת המתנה'] as const;
 
 interface AppShellProps {
   children: ReactNode;
@@ -23,7 +23,7 @@ export function AppShell({ children }: AppShellProps) {
   return (
     <SidebarProvider>
       <Sidebar>
-        <SidebarHeader className="px-4 py-3 text-lg font-bold">Workflow</SidebarHeader>
+        <SidebarHeader className="px-4 py-3 text-lg font-bold">לוח המשימות</SidebarHeader>
         <SidebarContent>
           <SidebarMenu className="px-2">
             {NAV_ITEMS.map((item, index) => (
